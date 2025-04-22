@@ -2,7 +2,7 @@
 #define MSGOBJECT_H
 
 #include <sys/msg.h>
-#include <string.h>
+// #include <string.h>
 #include <QDebug>
 
 #define MSG_OBJECT_LENGTH  1024

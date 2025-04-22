@@ -1,5 +1,6 @@
 #include "1030common.h"
 #include "modbuscrc.h"
+#include <vector>
 
 const IONUM comdevio[CS_DEVSTY_MAX] = { { 4, 2 }, { 12, 12 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 12, 12 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 12, 12 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } };
 /***********************************************************************************
@@ -34,7 +35,8 @@ int CAN_DEV_APP::creat_config_info(CAN_DEV_INFO &info)
         //        stateinfo->set_dev_enable_state(dev_off+1, devenable);
     }
 
-    uint8_t turnf[configsize * 2];
+    // uint8_t turnf[configsize * 2];
+    vector<uint8_t> turnf(configsize * 2);
 
     for(i = 0; i < para.innum; i++)
     {
@@ -104,10 +106,10 @@ int CAN_DEV_APP::creat_config_info(CAN_DEV_INFO &info)
     else if(para.type != CS_DEV)
         configsize -= CONF_TAIL;
 
-    memcpy(turnf, &config_p[CONF_HEAD], size);
+    memcpy(turnf.data(), &config_p[CONF_HEAD], size);
 
-    tbyte_swap((uint16_t *)turnf, size);
-    Modbus_CRCCal(turnf, size, (uint8_t *)(&config_p[3]));
+    tbyte_swap((uint16_t *)turnf.data(), size);
+    Modbus_CRCCal(turnf.data(), size, (uint8_t *)(&config_p[3]));
     return 0;
 }
 
@@ -139,7 +141,8 @@ int CAN_DEV_APP::set_default_config(uint8_t type)
         }
     }
 
-    uint8_t turnf[configsize * 2];
+    // uint8_t turnf[configsize * 2];
+    vector<uint8_t> turnf(configsize * 2);
 
     int size = (para.innum * PT_INPUTPARA_MAX + para.outnum * PT_OUTPUTPARA_MAX) * 2;
     if(para.outnum > 0)
@@ -156,10 +159,10 @@ int CAN_DEV_APP::set_default_config(uint8_t type)
     else
         configsize -= CONF_TAIL;
 
-    memcpy(turnf, &config_p[CONF_HEAD], size);
+    memcpy(turnf.data(), &config_p[CONF_HEAD], size);
 
-    tbyte_swap((uint16_t *)turnf, size);
-    Modbus_CRCCal(turnf, size, (uint8_t *)(&config_p[3]));
+    tbyte_swap((uint16_t *)turnf.data(), size);
+    Modbus_CRCCal(turnf.data(), size, (uint8_t *)(&config_p[3]));
     zprintf3("para.id %d crc %d\n", para.id, config_p[3]);
     return 0;
 }
@@ -284,9 +287,10 @@ int Max_State_Pro::max_state_pro_init(QString key, int branch_num)
 
 void Max_State_Pro::set_dev_enable_state(int id, uint8_t val)
 {
+    (void) val;
     int max_id = 3 * FATHER_DEV_MAX /*cs_have ? (1+PUMP_MAX_NUM +1) : PUMP_MAX_NUM+1*/;
     int min_id = 1;
-    int branch = id / FATHER_DEV_MAX;
+    // int branch = id / FATHER_DEV_MAX;
     if(id < min_id || id > max_id)
     {
         zprintf1("set dev enable id <%d> err!\n", id);

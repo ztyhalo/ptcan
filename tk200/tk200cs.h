@@ -15,17 +15,17 @@
 
 
 #include "can_protocol.h"
-#include "pro_data.h"
+// #include "pro_data.h"
 #include "bitset"
-#include "reflect.h"
-#include "driver.h"
-#include "ptxml.h"
+// #include "reflect.h"
+// #include "driver.h"
+// #include "ptxml.h"
 #include "candatainfo.h"
 #include "tkcommon.h"
-#include "zmap.h"
+// #include "zmap.h"
 #include "bsdev.h"
-#include "1030common.h"
-#include "sharemem.h"
+// #include "1030common.h"
+// #include "sharemem.h"
 
 using namespace std;
 

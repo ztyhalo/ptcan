@@ -2,10 +2,7 @@
 #define __1030COMMON_H__
 
 #include <stdint.h>
-#include "run_mode.h"
-#include <string>
 #include "candatainfo.h"
-#include "bsdev.h"
 #include "tkcommon.h"
 #include "zprint.h"
 

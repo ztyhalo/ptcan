@@ -13,16 +13,17 @@
 #define __TKCOMMON_H__
 
 #include "can_protocol.h"
-#include "pro_data.h"
+// #include "pro_data.h"
 #include "bitset"
-#include "reflect.h"
-#include "driver.h"
-#include "ptxml.h"
+// #include "reflect.h"
+// #include "driver.h"
+// #include "ptxml.h"
 #include "candatainfo.h"
-#include "msgtype.h"
+// #include "msgtype.h"
 #include "MsgMng.h"
 #include "timers.h"
 #include "mutex_class.h"
+#include "ptrwdatainfo.h"
 
 using namespace std;
 

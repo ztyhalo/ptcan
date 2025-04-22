@@ -18,7 +18,7 @@ using namespace std;
 
 void Pt_ShareData::set_pt_data(sDataUnit * add, double val)
 {
-    if((add -this->m_data) >= this->m_size/sizeof(sDataUnit))
+    if((add -this->m_data) >= (int)(this->m_size/sizeof(sDataUnit)))
     {
         zprintf1("set data off add 0x%x data 0x%x  %d %d\n", add, this->m_data,
                  add -this->m_data, this->m_size/sizeof(sDataUnit));
@@ -31,7 +31,7 @@ void Pt_ShareData::set_pt_data(sDataUnit * add, double val)
 
 void Pt_ShareData::set_pt_out_data(sDataUnit * add, double val, int st)
 {
-    if((add -this->m_data) >= this->m_size/sizeof(sDataUnit))
+    if((add -this->m_data) >= (int)(this->m_size/sizeof(sDataUnit)))
     {
         zprintf1("set data off add 0x%x data 0x%x  %d %d\n", add, this->m_data,
                  add -this->m_data, this->m_size/sizeof(sDataUnit));

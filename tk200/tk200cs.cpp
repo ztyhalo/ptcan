@@ -22,7 +22,6 @@
 #include <QTextStream>
 #include <QXmlStreamWriter>
 #include <QStringList>
-#include <iostream>
 #include <QDebug>
 #include "tk200pro.h"
 
@@ -248,7 +247,7 @@ void tk200_send_fram(CANDATAFORM & msg, uint8_t func, uint8_t addr)
 
 void TK200_CS::low_node_reset(void)
 {
-    for(uint i = 1; i <= low_dev.size(); i++)
+    for(int i = 1; i <= low_dev.size(); i++)
     {
         get_low(i)->dev_node_reset();
     }
@@ -379,6 +378,8 @@ int cs_start_ask_idprocess(void * tk_cs, CANDATAFORM data)
 
 int config_overtimer_process(void * tk_cs, CANDATAFORM  overmeg)
 {
+    (void)tk_cs;
+    (void)overmeg;
     zprintf3("cs config over time\n\n\n");
     return 0;
 }
@@ -426,6 +427,8 @@ int cs_output_ack_idprocess(void * tk_cs, CANDATAFORM data)
 
 int cs_output_overtimer_process(void * tk_cs, CANDATAFORM  overmeg)
 {
+    (void)tk_cs;
+    (void)overmeg;
     zprintf3("cs output overtimer!\n");
     sem_post(&gTk200_Rest_Meg);
     return 0;
@@ -539,8 +542,10 @@ int cs_poll_ack_idprocess(void * tk_cs, CANDATAFORM data)
         if(cs_p->low_dev[lowdevid]->in[nodeid+i+4])  //使能位
         {
             TKINPUT midin;
-
-            midin.outinfo = bswap_16(*(uint16_t *)(&data.Data[2+3*i]));
+            uint16_t temp;
+            memcpy(&temp, data.Data + 2 + 3*i, sizeof(temp));
+            midin.outinfo = bswap_16(temp);
+            // midin.outinfo = bswap_16(*(uint16_t *)(&data.Data[2+3*i]));
             if(cs_p->low_dev[lowdevid]->in[nodeid+i]) //频率量
             {
                 double midval = 0;
@@ -615,6 +620,7 @@ int cs_poll_ack_idprocess(void * tk_cs, CANDATAFORM data)
 }
 int cs_poll_overtimer_process(void * tk_cs, CANDATAFORM  overmeg)
 {
+    (void) overmeg;
     TK200_CS * cs_p = (TK200_CS *) tk_cs;
     zprintf1("cs%d poll timer over %d!\n", cs_p->csid,  cs_p->errcout);
     cs_p->errcout++;
@@ -681,7 +687,7 @@ int cs_bs_report_idprocess(void * tk_cs, CANDATAFORM data)
     case 7:
         for(int n=0;n<7;n++)
         {
-            bitset<8> midv(data.Data[4+n]);
+            bitset<8> midv(data.Data[n]);
             for(int j = 0; j < 8; j++)
                 cs_p->set_break_state(n*8+32+j , midv[7-j]);
         }
@@ -689,7 +695,7 @@ int cs_bs_report_idprocess(void * tk_cs, CANDATAFORM data)
     case 6:
         for(int n=0;n<6;n++)
         {
-            bitset<8> midv(data.Data[4+n]);
+            bitset<8> midv(data.Data[n]);
             for(int j = 0; j < 8; j++)
                 cs_p->set_break_state(n*8+88+j , midv[7-j]);
         }
@@ -927,7 +933,7 @@ void TK200_CS::set_low_switch_in_val(uint8_t child, uint8_t node, int val)
 
 void TK200_CS::low_init(void)
 {
-    for(uint i = 1; i <= low_dev.size(); i++)
+    for(int i = 1; i <= low_dev.size(); i++)
     {
         zprintf3("cs low id %d  %d init!\n", i, low_dev.size());
         get_low(i)->dev_node_pro_init();
@@ -990,7 +996,7 @@ int TK200_CS::pt_dev_init(void)
             {
     /*****************上电认可帧 0x420******************************************/
                 0,
-                (0x420 &DEV_ID_MASK)|(csid << 4),                                  //帧id
+            (0x420 &DEV_ID_MASK)|((uint32_t)csid << 4),                                  //帧id
                 2000,                                   //超时时间
                 1,                                      //重发次数
                 0x00,                                   //应答帧
@@ -1002,7 +1008,7 @@ int TK200_CS::pt_dev_init(void)
     /*****************输出控制帧 0x421******************************************/
             {
                 0,
-                (0x421&DEV_ID_MASK)|(csid << 4),                                  //帧id
+                (0x421&DEV_ID_MASK)|((uint32_t)csid << 4),                                  //帧id
                 120,                                     //超时时间
                 3,                                      //重发次数
                 0x00,                                   //应答帧
@@ -1015,7 +1021,7 @@ int TK200_CS::pt_dev_init(void)
     /*****************输入口变化响应 0x427******************************************/
             {
                 0,
-                (0x427&DEV_ID_MASK)|(csid << 4),                                  //帧id
+                (0x427&DEV_ID_MASK)|((uint32_t)csid << 4),                                  //帧id
                 -1,                                     //超时时间
                 1,                                      //重发次数
                 0x00,                                   //应答帧
@@ -1027,7 +1033,7 @@ int TK200_CS::pt_dev_init(void)
     /*****************数据请求帧 0x42f******************************************/
             {
                 0,
-                (0x42f&DEV_ID_MASK)|(csid << 4),                                  //帧id
+                (0x42f&DEV_ID_MASK)|((uint32_t)csid << 4),                                  //帧id
                 300,                                     //超时时间
                 1,                                      //重发次数
                 0x00,                                   //应答帧
@@ -1040,7 +1046,7 @@ int TK200_CS::pt_dev_init(void)
     /*****************上电认可帧 0x620******************************************/
             {
                 0,
-                (0x620&DEV_ID_MASK)|(csid << 4),                                  //帧id
+                (0x620&DEV_ID_MASK)|((uint32_t)csid << 4),                                  //帧id
                 0,                                      //超时时间
                 0,                                      //重发次数
                 0x00,                                   //应答帧
@@ -1052,7 +1058,7 @@ int TK200_CS::pt_dev_init(void)
     /*****************输出控制指令应答 0x621******************************************/
             {
                 0,
-                (0x621&DEV_ID_MASK)|(csid << 4),                                  //帧id
+                (0x621&DEV_ID_MASK)|((uint32_t)csid << 4),                                  //帧id
                 0,                                      //超时时间
                 0,                                      //重发次数
                 0x00,                                   //应答帧
@@ -1065,7 +1071,7 @@ int TK200_CS::pt_dev_init(void)
     /*****************cs通讯错误帧 0x622******************************************/
             {
                 0,
-                (0x622&DEV_ID_MASK)|(csid << 4),                                  //帧id
+                (0x622&DEV_ID_MASK)|((uint32_t)csid << 4),                                  //帧id
                 0,                                      //超时时间
                 0,                                      //重发次数
                 0x00,                                   //应答帧
@@ -1078,7 +1084,7 @@ int TK200_CS::pt_dev_init(void)
     /*****************数据请求应答帧 0x623******************************************/
             {
                 0,
-                (0x623&DEV_ID_MASK)|(csid << 4),                                  //帧id
+                (0x623&DEV_ID_MASK)|((uint32_t)csid << 4),                                  //帧id
                 0,                                      //超时时间
                 0,                                      //重发次数
                 0x00,                                   //应答帧
@@ -1091,7 +1097,7 @@ int TK200_CS::pt_dev_init(void)
     /*****************cs状态查询帧应答 0x624******************************************/
             {
                 0,
-                (0x624&DEV_ID_MASK)|(csid << 4),                                  //帧id
+                (0x624&DEV_ID_MASK)|((uint32_t)csid << 4),                                  //帧id
                 0,                                      //超时时间
                 0,                                      //重发次数
                 0x00,                                   //应答帧
@@ -1104,7 +1110,7 @@ int TK200_CS::pt_dev_init(void)
     /*****************输入口变化接收处理 0x625******************************************/
             {
                 0,
-                (0x625&DEV_ID_MASK)|(csid << 4),                                  //帧id
+                (0x625&DEV_ID_MASK)|((uint32_t)csid << 4),                                  //帧id
                 0,                                      //超时时间
                 0,                                      //重发次数
                 0x00,                                   //应答帧
@@ -1117,7 +1123,7 @@ int TK200_CS::pt_dev_init(void)
     /*****************cs急停状态变化上报处理 0x627******************************************/
             {
                 0,
-                (0x627&DEV_ID_MASK)|(csid << 4),                                  //帧id
+                (0x627&DEV_ID_MASK)|((uint32_t)csid << 4),                                  //帧id
                 0,                                      //超时时间
                 0,                                      //重发次数
                 0x00,                                   //应答帧
@@ -1129,7 +1135,7 @@ int TK200_CS::pt_dev_init(void)
     /*****************cs设置指令 0x628***********************************************************/
             {
                 0,
-                (0x628&DEV_ID_MASK)|(csid << 4),                                  //帧id
+                (0x628&DEV_ID_MASK)|((uint32_t)csid << 4),                                  //帧id
                 0,                                      //超时时间
                 0,                                      //重发次数
                 0x00,                                   //应答帧

@@ -62,8 +62,8 @@ bool MsgMng::InsertWaitMsg( Type_MsgAddr &waitid,uint16_t type,sem_t * pack)
 
 bool MsgMng::CheckWaitMsg( Type_MsgAddr waitid,uint16_t type)
 {
-    lWaitList::iterator item;
-
+    // lWaitList::iterator item;
+    QList <sWaitMsg>::iterator item;
     pthread_mutex_lock(&WaitListMutex);
 
     for(item= WaitDriverList.begin(); item != WaitDriverList.end(); ++item)

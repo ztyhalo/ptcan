@@ -22,7 +22,7 @@
 #include <QTextStream>
 #include <QXmlStreamWriter>
 #include <QStringList>
-#include <iostream>
+// #include <iostream>
 #include <QDebug>
 
 
@@ -71,7 +71,7 @@ void Can_Data::creat_can_bus_pro(void)
 
 int Can_Data::can_read_xml(QString name, QString name1, QString name2)
 {
-    int zjcs[3][2]   = { 0, 0, 1, 2, 1, 3 };
+    int zjcs[3][2]   = { {0, 0}, {1, 2}, {1, 3 }};
     readxml.parentid = 0;
     readxml.driver_read_xml(name);
     QFile file1(name1);

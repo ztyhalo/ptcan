@@ -3,7 +3,7 @@
 
 #include "QVector"
 #include "xmlprocess.h"
-
+#include <QTextStream>
 #include <QFile>
 
 using namespace std;

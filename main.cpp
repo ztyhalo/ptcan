@@ -1,21 +1,18 @@
 #include <QTextCodec>
 #include <can_bus.h>
 #include <stdio.h>
-#include "e_poll.h"
+
 #include "timers.h"
-#include "pthread.h"
-#include "can_protocol.h"
-#include "pro_data.h"
+
+
 #include "candata.h"
-#include "tk200pro.h"
+#include <signal.h>
 #include "zprint.h"
 #include <QCoreApplication>
-#include "netprint.h"
+// #include "netprint.h"
 
 #include <string>
-#include <vector>
-#include <iostream>
-#include <fstream>
+
 
 #include <string.h>
 #ifdef AARCH64_PLATFORM
@@ -51,7 +48,9 @@ void SignalFunc(int var)
 O_Timer timr;
 int     printf_time_callback(TEvent *tmpara)
 {
+    (void)tmpara;
     // nprintf("info is!\n");
+    return 0;
 }
 
 int main(int argc, char *argv[])

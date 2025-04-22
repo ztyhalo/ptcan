@@ -1,15 +1,13 @@
 #ifndef CAN_PROTOCOL_H
 #define CAN_PROTOCOL_H
 #include <map>
-#include <vector>
-#include <algorithm>
 #include "can_bus.h"
 #include "timers.h"
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
 #include "clist.h"
-
+#include <bitset>
 
 #define CAN_PROP_TIMEINTV 10
 #define TIME_INTERVAL     2

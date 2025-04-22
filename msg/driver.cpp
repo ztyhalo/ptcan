@@ -1,5 +1,5 @@
 #include "driver.h"
-#include "MsgMng.h"
+#include "QDebug"
 
 driver::driver()
 {

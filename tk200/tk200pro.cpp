@@ -21,7 +21,8 @@
 #include <QTextStream>
 #include <QXmlStreamWriter>
 #include <QStringList>
-#include <iostream>
+// #include <iostream>
+#include "zmap.h"
 #include <QDebug>
 #include "tk200pro.h"
 
@@ -56,11 +57,11 @@ int TK200_State_Mem::tk200_state_data_init(QString key)
     if(this->creat_data( 2*sizeof(CS_DataType)+ 3*sizeof(PT_Dev_State), key) == NULL)
         return -1;
     for(i = 0; i < 2; i++){
-        this->father->cs200[i].data = (CS_DataType *)(this->data+i*sizeof(CS_DataType));
+        this->father->cs200[i].data = (CS_DataType *)(this->m_data+i*sizeof(CS_DataType));
         this->father->cs200[i].mem = this;
     }
     for(i = 0; i < 3; i++){
-        this->father->io200[i].data = ((PT_Dev_State *)(this->data+ 2*sizeof(CS_DataType))) +i;
+        this->father->io200[i].data = ((PT_Dev_State *)(this->m_data+ 2*sizeof(CS_DataType))) +i;
 
         this->father->io200[i].mem = this;
     }

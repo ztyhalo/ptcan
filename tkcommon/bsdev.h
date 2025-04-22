@@ -2,9 +2,11 @@
 #define __BSDEV_H__
 
 #include <stdint.h>
-#include "run_mode.h"
-#include <string>
-#include "candatainfo.h"
+// #include "run_mode.h"
+// #include <string>
+ #include "candatainfo.h"
+#include <bitset>
+#include "zprint.h"
 
 using namespace std;
 #define BS_MACHINE_NUM      128
@@ -20,6 +22,7 @@ typedef union
     }bsbit;
     uint16_t bsvalue;
 }BSINFO;
+
 class BS_Dev
 {
 public:

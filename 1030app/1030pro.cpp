@@ -2,11 +2,11 @@
 #define __1030_PRO_C__
 
 #include "1030pro.h"
-#include "run_mode.h"
+
 #include "timers.h"
-#include "modbuscrc.h"
+
 #include "zprint.h"
-#include "netprint.h"
+
 
 /***********************************************************************************
  * 函数名：cs_config_init
@@ -992,9 +992,10 @@ int configdata_ack_proc(void *pro1030, CANDATAFORM rxmeg)
  ***********************************************************************************/
 int configdata_overtimeproc(void *pro1030, CANDATAFORM rxmeg)
 {
+    (void)rxmeg;
     cs_can    *csrxcanp = (cs_can *)pro1030;
-    CANFRAMEID rxmidframe;
-    rxmidframe.canframeid = rxmeg.ExtId;
+    // CANFRAMEID rxmidframe;
+    // rxmidframe.canframeid = rxmeg.ExtId;
     if (csrxcanp == NULL)
     {
         return -1;
@@ -1198,10 +1199,12 @@ int output_controlack_overproc(void *pro1030, CANDATAFORM overmeg)
     }
     CANFRAMEID rxmidframe;
     rxmidframe.canframeid = overmeg.ExtId;
-    uint8_t get_dev_addr, get_zj_index, get_cs_index;
+    uint8_t get_dev_addr;
+    // uint8_t get_zj_index;
+    // uint8_t get_cs_index;
     get_dev_addr = rxmidframe.canframework.devaddr_8;
-    get_zj_index = rxmidframe.canframework.zjaddr_3;
-    get_cs_index = rxmidframe.canframework.csaddr_2;
+    // get_zj_index = rxmidframe.canframework.zjaddr_3;
+    // get_cs_index = rxmidframe.canframework.csaddr_2;
     branch       = csrxcanp->get_branch(rxmidframe);
     csrxcanp->is_have_dev(
         rxmidframe.canframework.zjaddr_3, rxmidframe.canframework.csaddr_2, rxmidframe.canframework.devaddr_8, order);
@@ -1556,7 +1559,7 @@ int dev_break_check_callback(void *pro1030, CANDATAFORM rxmeg)
     bool           lock_status;
     tbyte_swap((uint16_t *)rxmeg.Data, rxmeg.DLC);
     rxmidframe.canframeid = rxmeg.ExtId;
-
+    (void)slave_io_num_tmp;
     branch = csrxcanp->get_branch(rxmidframe);
 
     get_dev_addr = rxmidframe.canframework.devaddr_8;
@@ -1642,6 +1645,7 @@ int dev_break_check_callback(void *pro1030, CANDATAFORM rxmeg)
  ***********************************************************************************/
 int dev_break_check_overtime(void *pro1030, CANDATAFORM rxmeg)
 {
+    (void)rxmeg;
     cs_can        *csrxcanp            = (cs_can *)pro1030;
     static uint8_t break_location_last = 0;
     if (IS_ONE(csrxcanp->break_send_status, 1))
@@ -1792,12 +1796,12 @@ void com_heart_nextprocess(CANPRODATA *rxprodata, cs_can *csrxcanp, uint8_t devn
     CS_BRANCH_TYPE branch;
     CANFRAMEID     rxmidframe;
     int            config_id = 0;
-    int            battery   = 0;
+    // int            battery   = 0;
     rxmidframe.canframeid    = rxmeg.ExtId;
-    uint8_t get_dev_addr, get_zj_index, get_cs_index;
-    get_dev_addr = rxmidframe.canframework.devaddr_8;
-    get_zj_index = rxmidframe.canframework.zjaddr_3;
-    get_cs_index = rxmidframe.canframework.csaddr_2;
+    // uint8_t get_dev_addr, get_zj_index, get_cs_index;
+    // get_dev_addr = rxmidframe.canframework.devaddr_8;
+    // get_zj_index = rxmidframe.canframework.zjaddr_3;
+    // get_cs_index = rxmidframe.canframework.csaddr_2;
 
     branch = csrxcanp->get_branch(rxmidframe);
 
@@ -1878,7 +1882,7 @@ void com_heart_nextprocess(CANPRODATA *rxprodata, cs_can *csrxcanp, uint8_t devn
 
 __inline__ bool count_heart_nextprocess(cs_can *csrxcanp, uint8_t devnum, uint ttl)
 {
-    return csrxcanp->framark[devnum].to_ulong( ) == ((0x0001 << (ttl)) - 1);
+    return csrxcanp->framark[devnum].to_ulong( ) == ((0x0001U << (ttl)) - 1U);
 }
 
 bool is_heartframe_correct(cs_can *csrxcanp, uint8_t devnum, int ttl, CANDATAFORM rxmeg, uint16_t devtyle)
@@ -1900,7 +1904,7 @@ void heart_nonextprocess(CANPRODATA *rxprodata, cs_can *csrxcanp, uint8_t devnum
     uint16_t   devtyle = 0;
     CANFRAMEID rxmidframe;
     int        branch;
-    uint8_t    get_dev_addr, get_zj_index, get_cs_index;
+    uint8_t    get_dev_addr; // get_zj_index, get_cs_index;
     int        config_id = 0;
     int        bs_num = 0, io_num = 0;
     uint8_t    devtype;
@@ -1911,8 +1915,8 @@ void heart_nonextprocess(CANPRODATA *rxprodata, cs_can *csrxcanp, uint8_t devnum
     rxmidframe.canframeid = rxmeg.ExtId;
 
     get_dev_addr = rxmidframe.canframework.devaddr_8;
-    get_zj_index = rxmidframe.canframework.zjaddr_3;
-    get_cs_index = rxmidframe.canframework.csaddr_2;
+    // get_zj_index = rxmidframe.canframework.zjaddr_3;
+    // get_cs_index = rxmidframe.canframework.csaddr_2;
 
     if (rxmidframe.canframework.zjaddr_3)
     {
@@ -2036,11 +2040,11 @@ int max_heart_ackframe_proc(void *pro1030, CANDATAFORM rxmeg)
     CANPRODATA *rxprodata = NULL;
     cs_can     *csrxcanp  = (cs_can *)pro1030;
 
-    uint8_t get_dev_addr, get_zj_index, get_cs_index;
+    uint8_t get_dev_addr;//    get_zj_index, get_cs_index;
     rxmidframe.canframeid = rxmeg.ExtId;
     get_dev_addr          = rxmidframe.canframework.devaddr_8;
-    get_zj_index          = rxmidframe.canframework.zjaddr_3;
-    get_cs_index          = rxmidframe.canframework.csaddr_2;
+    // get_zj_index          = rxmidframe.canframework.zjaddr_3;
+    // get_cs_index          = rxmidframe.canframework.csaddr_2;
     if (csrxcanp == NULL)
     {
         return -1;
@@ -2224,14 +2228,14 @@ int err_reportframe_proc(void *pro1030, CANDATAFORM rxmeg)
     uint8_t    error_status[2];
     CANFRAMEID rxmidframe;
     cs_can    *csrxcanp = (cs_can *)pro1030;
-    uint8_t    get_dev_addr, get_zj_index, get_cs_index;
+    uint8_t    get_dev_addr;// get_zj_index, get_cs_index;
 
     rxmidframe.canframeid = rxmeg.ExtId;
     tbyte_swap((uint16_t *)rxmeg.Data, rxmeg.DLC);
 
     get_dev_addr = rxmidframe.canframework.devaddr_8;
-    get_zj_index = rxmidframe.canframework.zjaddr_3;
-    get_cs_index = rxmidframe.canframework.csaddr_2;
+    // get_zj_index = rxmidframe.canframework.zjaddr_3;
+    // get_cs_index = rxmidframe.canframework.csaddr_2;
 
     if (csrxcanp == NULL)
         return -1;
@@ -2257,7 +2261,7 @@ int err_reportframe_proc(void *pro1030, CANDATAFORM rxmeg)
 int slavereset_frame_proc(void *pro1030, CANDATAFORM rxmeg)
 {
     uint8_t        reset_reason[5] = { 0, 0, 0, 0, 0 };
-    uint8_t        get_dev_addr, get_zj_index, get_cs_index;
+    uint8_t        get_dev_addr; //get_zj_index, get_cs_index;
     CANFRAMEID     rxmidframe;
     static uint8_t report_addr = 0;
     cs_can        *csrxcanp    = (cs_can *)pro1030;
@@ -2268,8 +2272,8 @@ int slavereset_frame_proc(void *pro1030, CANDATAFORM rxmeg)
     rxmidframe.canframeid = rxmeg.ExtId;
 
     get_dev_addr = rxmidframe.canframework.devaddr_8;
-    get_zj_index = rxmidframe.canframework.zjaddr_3;
-    get_cs_index = rxmidframe.canframework.csaddr_2;
+    // get_zj_index = rxmidframe.canframework.zjaddr_3;
+    // get_cs_index = rxmidframe.canframework.csaddr_2;
 
     tbyte_swap((uint16_t *)rxmeg.Data, rxmeg.DLC);
     rxmeg.Data[5]    = 0;
@@ -2345,7 +2349,7 @@ int slavereset_frame_proc(void *pro1030, CANDATAFORM rxmeg)
 
 cs_can::cs_can(ncan_protocol *pro, QString key, int branch_num, int reset_enable)
 {
-    memset(this, 0x00, offsetof(cs_can, nconfig_map));
+    // memset(this, 0x00, offsetof(cs_can, nconfig_map));
     //    memset(this, 0x00, offsetof(cs_can, mac_cszd_have));
     auto_reset = reset_enable;
     sem_init(&statechg, 0, 0);
@@ -2504,7 +2508,7 @@ void cs_can::max_reset_data(void)
 {
     csstate    = CS_CAN_INIT;    // 1030协议初始化时的状态变迁
     devonnum   = 0;
-    cf_devnum  = cf_devnum;     // 配置的设备个数
+    // cf_devnum  = cf_devnum;     // 配置的设备个数
     cf_endnum  = 0;             // 重配的结束设备编号
     csmacstate = MAC_NORMAL;    // mac查询状态
     csmacorder = 0;             // mac查询应答顺序编号
@@ -2784,16 +2788,16 @@ int max_poll_send_condition(void *para)
 void cs_can::set_dev_status(uint8_t devid, uint8_t state)
 {
     int      max_id = 3 * FATHER_DEV_MAX;
-    uint16_t dev_off;
+    // uint16_t dev_off;
     if (devid < 1 || devid > max_id)
     {
         zprintf1("set dev state id%d err!\n", devid);
         return;
     }
-    if (nconfig_map.val(devid - 1).para.id != 0)
-    {
-        dev_off = nconfig_map.val(devid - 1).dev_off;
-    }
+    // if (nconfig_map.val(devid - 1).para.id != 0)
+    // {
+    //     dev_off = nconfig_map.val(devid - 1).dev_off;
+    // }
     state_info.set_dev_status(devid, state);
 }
 

@@ -5,7 +5,7 @@
 
 #include <string.h>
 #include <errno.h>
-#include <signal.h>
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/time.h>
@@ -14,11 +14,10 @@
 #include <semaphore.h>
 #include "e_poll.h"
 #include <sys/eventfd.h>
-#include <bitset>
-#include "timers.h"
-#include "pro_data.h"
-#include "zprint.h"
 
+
+#include "zprint.h"
+#include "pro_data.h"
 
 
 using namespace std;

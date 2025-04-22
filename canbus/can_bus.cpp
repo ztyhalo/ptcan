@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "timers.h"
 #include <sstream>
-#include "netprint.h"
+// #include "netprint.h"
 
 using namespace std;
 
@@ -118,6 +118,7 @@ int  call_write_back(CanDriver * pro, CANDATAFORM data)
 //         printf("can brate set fail!\n");
 //         return -1;
 //     }
+     (void) brate;
 
      /* socketCAN连接 */
      CanFileP = socket(PF_CAN, SOCK_RAW, CAN_RAW);

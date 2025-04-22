@@ -22,9 +22,7 @@
 #include <QTextStream>
 #include <QXmlStreamWriter>
 #include <QStringList>
-#include <iostream>
 #include <QDebug>
-#include "1030common.h"
 #include "tk200pro.h"
 
 
@@ -175,11 +173,13 @@ void PT_Dev_Virt::reset_data_init(void)
  ***********************************************************************************/
 int tk_io_send_condition(void * para)
 {
+    (void) para;
     return 1;
 }
 
 int tk_io_poll_send_condition(void * para)
-{    
+{
+    (void) para;
         return 1; 
 }
 
@@ -505,6 +505,7 @@ int tk_change_ask_idprocess(void * tkio_dev, CANDATAFORM data)
  ***********************************************************************************/
 int tk_frame_overtime_process(void * tkio_dev, CANDATAFORM  overmeg)
 {
+    (void) overmeg;
    TK_IO_Dev * midp = (TK_IO_Dev *) tkio_dev;
     midp->attr.iostate = TK_IO_BUG;
     return 1;
@@ -517,6 +518,7 @@ int tk_frame_overtime_process(void * tkio_dev, CANDATAFORM  overmeg)
  ***********************************************************************************/
 int tk_outframe_overtime_process(void * tkio_dev, CANDATAFORM  overmeg)
 {
+    (void)overmeg;
     TK_IO_Dev * midp = (TK_IO_Dev *) tkio_dev;
     midp->delete_dev_timer();
     midp->attr.iostate = TK_IO_BUG;
@@ -535,6 +537,7 @@ int tk_outframe_overtime_process(void * tkio_dev, CANDATAFORM  overmeg)
  ***********************************************************************************/
 int tk_datareqframe_overtime_process(void * tkio_dev, CANDATAFORM  overmeg)
 {
+    (void) overmeg;
    TK_IO_Dev * midp = (TK_IO_Dev *) tkio_dev;
     midp->attr.errcount++;
     zprintf1("io dev overtimer!\n");
@@ -689,7 +692,7 @@ int TK_IO_Dev::pt_dev_init(void)
             {
     /*****************上电认可帧 0x450******************************************/
                 0,
-                SET_FRAM_DEV(0x450, io_id),                                  //帧id
+                SET_FRAM_DEV(0x450, (uint32_t)io_id),                                  //帧id
                 2000,                                   //超时时间
                 2,                                      //重发次数
                 0x00,                                   //应答帧
@@ -701,7 +704,7 @@ int TK_IO_Dev::pt_dev_init(void)
     /*****************输出控制帧 0x451******************************************/
             {
                 0,
-                SET_FRAM_DEV(0x451, io_id),                                  //帧id
+            SET_FRAM_DEV(0x451, (uint32_t)io_id),                                  //帧id
                 20,                                     //超时时间
                 5,                                      //重发次数
                 0x00,                                   //应答帧
@@ -713,7 +716,7 @@ int TK_IO_Dev::pt_dev_init(void)
     /*****************数据请求帧 0x45f******************************************/
             {
                 0,
-                SET_FRAM_DEV(0x45f, io_id),                                  //帧id
+                SET_FRAM_DEV(0x45f, (uint32_t)io_id),                                  //帧id
                 80,                                     //超时时间
                 1,                                      //重发次数
                 0x00,                                   //应答帧
@@ -726,7 +729,7 @@ int TK_IO_Dev::pt_dev_init(void)
     /*****************上电认可帧 0x650******************************************/
             {
                 0,
-                SET_FRAM_DEV(0x650, io_id),                                  //帧id
+                SET_FRAM_DEV(0x650, (uint32_t)io_id),                                  //帧id
                 0,                                      //超时时间
                 0,                                      //重发次数
                 0x00,                                   //应答帧
@@ -738,7 +741,7 @@ int TK_IO_Dev::pt_dev_init(void)
     /*****************输出控制指令应答 0x651******************************************/
             {
                 0,
-                SET_FRAM_DEV(0x651, io_id),                                  //帧id
+                SET_FRAM_DEV(0x651, (uint32_t)io_id),                                  //帧id
                 0,                                      //超时时间
                 0,                                      //重发次数
                 0x00,                                   //应答帧
@@ -751,7 +754,7 @@ int TK_IO_Dev::pt_dev_init(void)
     /*****************数据请求应答帧1 0x652******************************************/
             {
                 0,
-                SET_FRAM_DEV(0x652, io_id),                                  //帧id
+                SET_FRAM_DEV(0x652, (uint32_t)io_id),                                  //帧id
                 0,                                      //超时时间
                 0,                                      //重发次数
                 0x00,                                   //应答帧
@@ -763,7 +766,7 @@ int TK_IO_Dev::pt_dev_init(void)
     /*****************数据请求应答帧2 0x653******************************************/
             {
                 0,
-                SET_FRAM_DEV(0x653, io_id),                                  //帧id
+                SET_FRAM_DEV(0x653, (uint32_t)io_id),                                  //帧id
                 0,                                      //超时时间
                 0,                                      //重发次数
                 0x00,                                   //应答帧
@@ -816,7 +819,7 @@ int TK_IO_Dev::pt_dev_init(void)
             /*****************上电认可及配置应答帧 0x656******************************************/
                     {
                         0,
-                        SET_FRAM_DEV(0x656, io_id),                      //帧id
+                        SET_FRAM_DEV(0x656, (uint32_t)io_id),                      //帧id
                         0,                                      //超时时间
                         0,                                      //重发次数
                         0x00,                                   //应答帧
@@ -846,7 +849,7 @@ int TK_IO_Dev::pt_dev_init(void)
             /*****************数据请求应答帧3 0x654******************************************/
                     {
                         0,
-                        SET_FRAM_DEV(0x654, io_id),                                  //帧id
+                        SET_FRAM_DEV(0x654, (uint32_t)io_id),                                  //帧id
                         0,                                      //超时时间
                         0,                                      //重发次数
                         0x00,                                   //应答帧
@@ -858,7 +861,7 @@ int TK_IO_Dev::pt_dev_init(void)
         /*****************输入口变化请求 0x655***********************************************************/
                 {
                     0,
-                    SET_FRAM_DEV(0x655, io_id),                                  //帧id
+                    SET_FRAM_DEV(0x655, (uint32_t)io_id),                                  //帧id
                     0,                                      //超时时间
                     0,                                      //重发次数
                     0x00,                                   //应答帧
