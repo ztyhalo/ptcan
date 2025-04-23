@@ -22,7 +22,7 @@
 #include "1030pro.h"
 #include "tk200pro.h"
 #include "zprint.h"
-
+#include "sharemem.h"
 
 using namespace std;
 
@@ -46,17 +46,12 @@ public:
     //    Pro_XML_Process      conf_func;
     cs_can    *cs1030;
     TK200_Pro *tk200;
+    ShareDataT<can_inode_info> m_share;
 
 public:
-    Can_Data( )
+    Can_Data( ):canid(0),canbus(NULL),canpro(NULL),cs1030(NULL),tk200(NULL)
     {
-
         memset(&d_info, 0x00, sizeof(d_info));
-        canid  = 0;
-        canbus = NULL;
-        canpro = NULL;
-        tk200  = NULL;
-        cs1030 = NULL;
     }
     ~Can_Data( )
     {
@@ -90,7 +85,7 @@ public:
         }
     }
     void creat_can_bus_pro(void);
-    int  can_read_xml(QString name, QString name1, QString name2);
+    int  can_read_xml(const QString  name, const QString  name1, const QString  name2);
     int  can_app_init(void);
     int  get_innode_info(int dev, int child, int innode, can_inode_info &val);
 };

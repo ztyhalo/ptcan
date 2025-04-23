@@ -104,7 +104,7 @@ void Dev_Node_Pro::dev_node_pro_init(void)
 
         double t = ((double)ms)/1000;
         dtimer.add_event(t, dev_node_time_callback, this);
-        dtimer.start();
+        dtimer.start("dev timer");
     }
 }
 

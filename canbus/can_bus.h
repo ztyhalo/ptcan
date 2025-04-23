@@ -68,7 +68,7 @@ public:
    pthread_mutex_t      send_mut;
 
     int (*rxcallback)(CanDriver * pro, CanFrame data);
-    READBUF  canread;
+    // READBUF  canread;
     WRITEBUF canwrite;
 
 public:

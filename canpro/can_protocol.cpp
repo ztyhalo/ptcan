@@ -381,7 +381,7 @@ int ncan_protocol::ncan_pro_init(CanDriver* dri)
 
 void ncan_protocol::start(void)
 {
-    protm.start();
+    protm.start("can protocol timer");
 }
 
 int ncan_protocol::init_pro_frame(CANPROHEAD* info, int size)

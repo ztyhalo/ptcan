@@ -69,7 +69,7 @@ void Can_Data::creat_can_bus_pro(void)
     canpro = new ncan_protocol();
 }
 
-int Can_Data::can_read_xml(QString name, QString name1, QString name2)
+int Can_Data::can_read_xml(const QString  name, const QString  name1, const QString  name2)
 {
     int zjcs[3][2]   = { {0, 0}, {1, 2}, {1, 3 }};
     readxml.parentid = 0;
@@ -86,7 +86,8 @@ int Can_Data::can_read_xml(QString name, QString name1, QString name2)
         readxml.parentid++;
         readxml.driver_read_xml(name2);
     }
-
+    zprintf1("zty mshare crate data!\n");
+    m_share.creat_data(sizeof(can_inode_info)*5, 97654888);
     memset(&d_info, 0x00, sizeof(d_info));
     for(int i = 0; i < readxml.dev.size(); i++)
     {
@@ -226,7 +227,7 @@ int Can_Data::can_app_init(void)
     canpro->ncan_pro_init(canbus);
 
     canpro->start();
-    canbus->start();
+    canbus->start("can bus");
 
     if(cs1030 != NULL)
     {
@@ -238,7 +239,7 @@ int Can_Data::can_app_init(void)
         }
         else
         {
-            semwrite.pdata.z_pthread_init(dev1030_output, cs1030);
+            semwrite.pdata.z_pthread_init(dev1030_output, cs1030, "1030 output");
         }
     }
 

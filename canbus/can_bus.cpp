@@ -1,7 +1,7 @@
 #include "can_bus.h"
 #include <stdio.h>
 #include "timers.h"
-#include <sstream>
+// #include <sstream>
 // #include "netprint.h"
 
 using namespace std;
@@ -161,7 +161,7 @@ int  call_write_back(CanDriver * pro, const CANDATAFORM data)
      }
 
      e_poll_add(CanFileP);
-     canwrite.z_pthread_init(call_write_back, this);
+     canwrite.z_pthread_init(call_write_back, this, "canbus write");
 //     start();
 
      return 0;
@@ -173,10 +173,14 @@ void CanDriver::run()
 //    struct epoll_event events[get_epoll_size()];
     char buf[sizeof(CanFrame)];
     CanFrame * pfram = (CanFrame*)buf;
-    for (;  ; )
+    while (this->running)
     {
 //        memset(&events, 0, sizeof(events));
+#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 4)
+        if(wait_fd_change(-1) != -1)
+#else
         if(wait_fd_change(150) != -1)
+#endif
         {
 //            printf("receive can frame\n");
 //            nprintf("receive can data!\n");

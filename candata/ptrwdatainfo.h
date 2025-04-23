@@ -101,10 +101,9 @@ public:
     int         buf_size;
     sDataUnit * add_p;
 public:
-    Pt_Devs_ShareData(int dri = 1){
-        dri_id = dri;
-        buf_size = 0;
-        add_p = NULL;
+    Pt_Devs_ShareData(int dri = 1):dri_id(dri),buf_size(0),add_p(NULL)
+    {
+        ;
     }
     ~Pt_Devs_ShareData(){
        zprintf3("destory Pt_Devs_ShareData!\n");
@@ -132,8 +131,9 @@ public:
     int dri_id;
     QTS_DATAS_T<sDataUnit> qtread;
 public:
-    PRO_ShreDATA(int dri = 1){
-        dri_id = dri;
+    PRO_ShreDATA(int dri = 1):dri_id(dri)
+    {
+        ;
     }
     void creat_pt_share(int size, QString keyid);
     void dev_share_data_init(int devid, int childid,int innum);
@@ -155,9 +155,9 @@ class IO_ShareData:public QT_Share_MemT<cDataUnit>,public Dev_Map_T<cDataUnit>
 public:
     int         dri_id;
 public:
-    IO_ShareData(int dri = 1)
+    IO_ShareData(int dri = 1):dri_id(dri)
     {
-        dri_id = dri;
+        ;
     }
     virtual ~IO_ShareData(){
        zprintf3("destory Pt_Devs_ShareData!\n");

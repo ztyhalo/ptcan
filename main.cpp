@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(codec);
     QCoreApplication a(argc, argv);
 
-#if 0
+#if 1
          argc = 9;
          argv[1] = "87654334";
          argv[2] = "87654335";
