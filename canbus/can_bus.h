@@ -4,7 +4,7 @@
 #include "can_relate.h"
 
 #include <string.h>
-#include <errno.h>
+// #include <errno.h>
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -72,10 +72,11 @@ public:
     WRITEBUF canwrite;
 
 public:
-    CanDriver(int fnum = 1):NCbk_Poll(fnum){
-        father_p = NULL;
-        interval = 5;
-        rxcallback = NULL;
+    CanDriver(int fnum = 1):NCbk_Poll(fnum),interval(5),CanFileP(0),father_p(NULL),rxcallback(NULL)
+    {
+        // father_p = NULL;
+        // interval = 5;
+        // rxcallback = NULL;
         pthread_mutex_init(&send_mut, NULL);
     }
     ~CanDriver(){
@@ -90,7 +91,7 @@ public:
 
     int can_bus_init(int registerdev ,int brate = 100000);
     void run();
-    int write_send_data(CANDATAFORM  & Msg);
+    int write_send_data(const CANDATAFORM  & Msg);
     int writeframe(const CANDATAFORM& f);
     int writeframe(const CanFrame& f);
 

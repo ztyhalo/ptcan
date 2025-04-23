@@ -191,6 +191,14 @@ public:
     CS_DataType *      data;
     TK200_State_Mem *  mem;
 public:
+    CS_Data_Pro():csid(0),data(NULL),mem(NULL)
+    {
+        ;
+    }
+    ~CS_Data_Pro()
+    {
+        ;
+    }
     void set_ver(uchar val);
     void set_cs_en(uchar val);
     void set_on_flag(uchar val);
@@ -229,16 +237,14 @@ public:
     QVector<Low_Dev *>        low_dev;       //下位机设备
 
 public:
-    TK200_CS(ncan_protocol * pro, Pt_Devs_ShareData * data = NULL):PT_Dev_Virt(pro,data
-                                                                               ,TK200_CSModule)
+    explicit TK200_CS(ncan_protocol * pro, Pt_Devs_ShareData * data = NULL):PT_Dev_Virt(pro,data,TK200_CSModule),
+        use(0),errcout(0)
     {
-        use = 0;
-        errcout = 0;
+        ;
     }
-    TK200_CS()
+    TK200_CS():use(0),errcout(0)
     {
-        use = 0;
-        errcout = 0;
+        ;
     }
     ~TK200_CS()
     {

@@ -78,11 +78,11 @@ void Pt_Devs_ShareData::creat_pt_share(int size, QString keyid)
 }
 void Pt_Devs_ShareData::reset_data_value(void)
 {
-    sDataUnit * valp;
+
 
     if(add_p != NULL)
     {
-        valp = add_p;
+        sDataUnit * valp = add_p;
         for(int i = 0; i < buf_size; i++)
         {
             valp->value = 0;

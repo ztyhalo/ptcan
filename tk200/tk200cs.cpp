@@ -300,7 +300,7 @@ CANDATAFORM TK200_CS::send_low_config(void)
 ********************************************************************************************************************************/
 int cs_start_ask_idprocess(void * tk_cs, CANDATAFORM data)
 {
-    TK200_CS * cs_p = (TK200_CS *) tk_cs;
+    TK200_CS * cs_p = static_cast<TK200_CS *>(tk_cs);
     if(cs_p == NULL) return -1;
 
     TK_FRAMEID midframid;
@@ -397,7 +397,7 @@ int config_overtimer_process(void * tk_cs, CANDATAFORM  overmeg)
 ********************************************************************************************************************************/
 int cs_output_ack_idprocess(void * tk_cs, CANDATAFORM data)
 {
-    TK200_CS * cs_p = (TK200_CS *) tk_cs;
+    TK200_CS * cs_p = static_cast<TK200_CS *>(tk_cs);
     if(cs_p == NULL) return -1;
 
 
@@ -447,7 +447,7 @@ int cs_output_overtimer_process(void * tk_cs, CANDATAFORM  overmeg)
 ********************************************************************************************************************************/
 int cs_err_report_idprocess(void * tk_cs, CANDATAFORM data)
 {
-    TK200_CS * cs_p = (TK200_CS *) tk_cs;
+    TK200_CS * cs_p = static_cast<TK200_CS *>(tk_cs);
     if(cs_p == NULL) return -1;
 
 
@@ -528,7 +528,7 @@ int cs_err_report_idprocess(void * tk_cs, CANDATAFORM data)
 ********************************************************************************************************************************/
 int cs_poll_ack_idprocess(void * tk_cs, CANDATAFORM data)
 {
-    TK200_CS * cs_p = (TK200_CS *) tk_cs;
+    TK200_CS * cs_p = static_cast<TK200_CS *>(tk_cs);
     if(cs_p == NULL) return -1;
     if(data.DLC != 8) return -1;
 
@@ -621,7 +621,7 @@ int cs_poll_ack_idprocess(void * tk_cs, CANDATAFORM data)
 int cs_poll_overtimer_process(void * tk_cs, CANDATAFORM  overmeg)
 {
     (void) overmeg;
-    TK200_CS * cs_p = (TK200_CS *) tk_cs;
+    TK200_CS * cs_p = static_cast<TK200_CS *>(tk_cs);
     zprintf1("cs%d poll timer over %d!\n", cs_p->csid,  cs_p->errcout);
     cs_p->errcout++;
     if(cs_p->errcout >3)
@@ -651,7 +651,7 @@ int cs_poll_overtimer_process(void * tk_cs, CANDATAFORM  overmeg)
 ********************************************************************************************************************************/
 int cs_bs_report_idprocess(void * tk_cs, CANDATAFORM data)
 {
-    TK200_CS * cs_p = (TK200_CS *) tk_cs;
+    TK200_CS * cs_p = static_cast<TK200_CS *>(tk_cs);
     if(cs_p == NULL) return -1;
 
 
@@ -728,7 +728,7 @@ int cs_bs_report_idprocess(void * tk_cs, CANDATAFORM data)
 ********************************************************************************************************************************/
 int cs_instate_report_idprocess(void * tk_cs, CANDATAFORM data)
 {
-    TK200_CS * cs_p = (TK200_CS *) tk_cs;
+    TK200_CS * cs_p = static_cast<TK200_CS *>(tk_cs);
     if(cs_p == NULL) return -1;
 
     if(data.Data[0]<0x30)
@@ -792,7 +792,7 @@ int cs_instate_report_idprocess(void * tk_cs, CANDATAFORM data)
 ********************************************************************************************************************************/
 int cs_stop_report_idprocess(void * tk_cs, CANDATAFORM data)
 {
-    TK200_CS * cs_p = (TK200_CS *) tk_cs;
+    TK200_CS * cs_p = static_cast<TK200_CS *>(tk_cs);
     if(cs_p == NULL) return -1;
 
     TK_FRAMEID midframid;
@@ -825,7 +825,7 @@ int cs_stop_report_idprocess(void * tk_cs, CANDATAFORM data)
 ********************************************************************************************************************************/
 int cs_setaddr_ack_idprocess(void * tk_cs, CANDATAFORM data)
 {
-    TK200_CS * cs_p = (TK200_CS *) tk_cs;
+    TK200_CS * cs_p = static_cast<TK200_CS *>(tk_cs);
     if(cs_p == NULL) return -1;
     TK_FRAMEID midframid;
 
@@ -946,8 +946,6 @@ int TK200_CS::tk200_cs_config(CAN_DEV_INFO & dev, uint8_t devoff)
     dev_off = devoff;
 
     LowDeviceSetNumber = 0;
-    pro_p = pro_p;
-    data_p = data_p;
     dev_para = dev.para;
     if(dev_para.innum != 0)                    //闭锁设备
     {

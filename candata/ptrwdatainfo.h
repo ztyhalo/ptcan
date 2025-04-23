@@ -59,9 +59,9 @@ public:
     }
     cDataUnit()
     {
-        ;
+        memset(this, 0x00, sizeof(cDataUnit));
     }
-    void set_all(cDataUnit val)
+    void set_all(const cDataUnit & val)
     {
         *this = val;
     }

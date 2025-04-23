@@ -124,7 +124,8 @@ int main(int argc, char *argv[])
                 p->tm_mday, p->tm_hour, p->tm_min, p->tm_sec);    // 把格式化的时间写入字符数组中
         pr_file += name;
 
-        debug_p->printf_init(pr_file.c_str( ), 0);
+        // debug_p->printf_init(pr_file.c_str( ), 0);
+        PRINTF_CLASS::getInstance()->printf_class_init(path, pr_file);
     }
     zprintf3("++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
     zprintf3("Project: %s\r\n", "ptcan1 for KTC256 ");

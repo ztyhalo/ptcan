@@ -605,7 +605,7 @@ CS_BRANCH_TYPE cs_can::get_branch(CANFRAMEID rxmidframe)
  ***********************************************************************************/
 int power_resetovertime_process(void *pro1030, CANDATAFORM overmeg)
 {
-    cs_can *csrxcanp = (cs_can *)pro1030;
+    cs_can *csrxcanp = static_cast<cs_can *>(pro1030);
     Q_UNUSED(overmeg);
     if (csrxcanp == NULL)
     {
@@ -621,7 +621,7 @@ int power_resetovertime_process(void *pro1030, CANDATAFORM overmeg)
  ***********************************************************************************/
 int mac_inquire_ack_proc(void *pro1030, CANDATAFORM rxmeg)
 {
-    cs_can        *csrxcanp = (cs_can *)pro1030;
+    cs_can        *csrxcanp = static_cast<cs_can *>(pro1030);
     int            devid = 0, config_devid = 0, slave_io_num_tmp;
     CS_BRANCH_TYPE branch;
     CANFRAMEID     rxmidframe, checkframe;
@@ -917,7 +917,7 @@ int mac_inquire_ack_proc(void *pro1030, CANDATAFORM rxmeg)
  ***********************************************************************************/
 int macreqdata_overtimeproc(void *pro1030, CANDATAFORM overmeg)
 {
-    cs_can *csrxcanp = (cs_can *)pro1030;
+    cs_can *csrxcanp = static_cast<cs_can *>(pro1030);
     Q_UNUSED(overmeg);
     zprintf1("mac check time over1111111111111111\n");
     if (csrxcanp->csstate != CS_CAN_NORMAL)
@@ -959,7 +959,7 @@ int configdata_ack_proc(void *pro1030, CANDATAFORM rxmeg)
     int        soureid;
     CANFRAMEID rxmidframe;
     CANFRAMEID checkframe;
-    cs_can    *csrxcanp = (cs_can *)pro1030;
+    cs_can    *csrxcanp = static_cast<cs_can *>(pro1030);
 
     if (csrxcanp == NULL)
         return -1;
@@ -993,7 +993,7 @@ int configdata_ack_proc(void *pro1030, CANDATAFORM rxmeg)
 int configdata_overtimeproc(void *pro1030, CANDATAFORM rxmeg)
 {
     (void)rxmeg;
-    cs_can    *csrxcanp = (cs_can *)pro1030;
+    cs_can    *csrxcanp = static_cast<cs_can *>(pro1030);
     // CANFRAMEID rxmidframe;
     // rxmidframe.canframeid = rxmeg.ExtId;
     if (csrxcanp == NULL)
@@ -1014,7 +1014,7 @@ int foutput_controlack_frameproc(void *pro1030, CANDATAFORM rxmeg)
     CANFRAMEID checkframe;
     int        soureid;
 
-    cs_can *csrxcanp = (cs_can *)pro1030;
+    cs_can *csrxcanp = static_cast<cs_can *>(pro1030);
 
     if (csrxcanp == NULL)
         return 0;
@@ -1053,7 +1053,7 @@ int foutput_controlack_frameproc(void *pro1030, CANDATAFORM rxmeg)
  ***********************************************************************************/
 void read_reg_entry(cs_can *csrxcanp, CANDATAFORM rxmeg)
 {
-    uint16_t   devtyle = 0;
+    // uint16_t   devtyle = 0;
     uint8_t    branch;
     int        sourceid;
     CANFRAMEID rxmidframe;
@@ -1070,7 +1070,7 @@ void read_reg_entry(cs_can *csrxcanp, CANDATAFORM rxmeg)
     if (csrxcanp->is_have_mac_dev(rxmidframe.canframework.zjaddr_3, rxmidframe.canframework.csaddr_2,
                                   rxmidframe.canframework.devaddr_8, sourceid))
     {
-        devtyle = csrxcanp->ndev_map.val(sourceid).type;
+        uint16_t devtyle = csrxcanp->ndev_map.val(sourceid).type;
         if (devtyle == CS_DEV)
         {
             return;
@@ -1126,7 +1126,7 @@ void read_reg_entry(cs_can *csrxcanp, CANDATAFORM rxmeg)
  ***********************************************************************************/
 int readreg_callback_frameproc(void *pro1030, CANDATAFORM rxmeg)
 {
-    cs_can *csrxcanp = (cs_can *)pro1030;
+    cs_can *csrxcanp = static_cast<cs_can *>(pro1030);
 
     if (csrxcanp == NULL)
     {
@@ -1147,7 +1147,7 @@ int output_controlack_frameproc(void *pro1030, CANDATAFORM rxmeg)
     CANFRAMEID checkframe;
     int        soureid;
 
-    cs_can *csrxcanp = (cs_can *)pro1030;
+    cs_can *csrxcanp = static_cast<cs_can *>(pro1030);
 
     if (csrxcanp == NULL)
     {
@@ -1191,7 +1191,7 @@ int output_controlack_overproc(void *pro1030, CANDATAFORM overmeg)
 {
     CS_BRANCH_TYPE branch;
     uint8_t        reset_reason[4] = { 0, 0, 0, 0 };
-    cs_can        *csrxcanp        = (cs_can *)pro1030;
+    cs_can        *csrxcanp        = static_cast<cs_can *>(pro1030);
     int            order;
     if (csrxcanp == NULL)
     {
@@ -1229,7 +1229,7 @@ int output_controlack_overproc(void *pro1030, CANDATAFORM overmeg)
 int stop_report_frameproc(void *pro1030, CANDATAFORM rxmeg)
 {
     CANFRAMEID rxmidframe;
-    cs_can    *csrxcanp = (cs_can *)pro1030;
+    cs_can    *csrxcanp = static_cast<cs_can *>(pro1030);
 
     if (csrxcanp == NULL)
         return 0;
@@ -1248,7 +1248,7 @@ int stop_report_frameproc(void *pro1030, CANDATAFORM rxmeg)
 int max_stop_report_frameproc(void *pro1030, CANDATAFORM rxmeg)
 {
     CANFRAMEID rxmidframe;
-    cs_can    *csrxcanp = (cs_can *)pro1030;
+    cs_can    *csrxcanp = static_cast<cs_can *>(pro1030);
     int        branch;
     int        soureid;
     int        zjnum;
@@ -1322,7 +1322,7 @@ int max_stop_report_frameproc(void *pro1030, CANDATAFORM rxmeg)
 int break_location_report_frameproc(void *pro1030, CANDATAFORM rxmeg)
 {
     CANFRAMEID rxmidframe;
-    cs_can    *csrxcanp = (cs_can *)pro1030;
+    cs_can    *csrxcanp = static_cast<cs_can *>(pro1030);
     int        branch;
 
     if (csrxcanp == NULL)
@@ -1400,7 +1400,7 @@ int auto_report_frameproc(void *pro1030, CANDATAFORM rxmeg)
         IO_FUNCTION
     };
     CANFRAMEID rxmidframe;
-    cs_can    *csrxcanp = (cs_can *)pro1030;
+    cs_can    *csrxcanp = static_cast<cs_can *>(pro1030);
 
     if (csrxcanp == NULL)
         return 0;
@@ -1548,7 +1548,7 @@ ACK_PROSS:
  ***********************************************************************************/
 int dev_break_check_callback(void *pro1030, CANDATAFORM rxmeg)
 {
-    cs_can        *csrxcanp = (cs_can *)pro1030;
+    cs_can        *csrxcanp = static_cast<cs_can *>(pro1030);
     CS_BRANCH_TYPE branch;
     CANFRAMEID     rxmidframe;
     CANFRAMEID     checkframe;
@@ -1646,7 +1646,7 @@ int dev_break_check_callback(void *pro1030, CANDATAFORM rxmeg)
 int dev_break_check_overtime(void *pro1030, CANDATAFORM rxmeg)
 {
     (void)rxmeg;
-    cs_can        *csrxcanp            = (cs_can *)pro1030;
+    cs_can        *csrxcanp            = static_cast<cs_can *>(pro1030);
     static uint8_t break_location_last = 0;
     if (IS_ONE(csrxcanp->break_send_status, 1))
     {
@@ -1722,7 +1722,7 @@ int dev_break_check_overtime(void *pro1030, CANDATAFORM rxmeg)
  ***********************************************************************************/
 int receive_a_v_callback(void *pro1030, CANDATAFORM rxmeg)
 {
-    cs_can    *csrxcanp = (cs_can *)pro1030;
+    cs_can    *csrxcanp = static_cast<cs_can *>(pro1030);
     uint8_t    branch;
     int        sourceid;
     CANFRAMEID rxmidframe;
@@ -1803,12 +1803,14 @@ void com_heart_nextprocess(CANPRODATA *rxprodata, cs_can *csrxcanp, uint8_t devn
     // get_zj_index = rxmidframe.canframework.zjaddr_3;
     // get_cs_index = rxmidframe.canframework.csaddr_2;
 
-    branch = csrxcanp->get_branch(rxmidframe);
-
     if (rxprodata == NULL || csrxcanp == NULL)
     {
         return;
     }
+
+    branch = csrxcanp->get_branch(rxmidframe);
+
+
 
     devtyle = csrxcanp->ndev_map.val(devnum).type;
 
@@ -2038,18 +2040,21 @@ int max_heart_ackframe_proc(void *pro1030, CANDATAFORM rxmeg)
     CANFRAMEID checkframe;
 
     CANPRODATA *rxprodata = NULL;
-    cs_can     *csrxcanp  = (cs_can *)pro1030;
+    cs_can     *csrxcanp  = static_cast<cs_can *>(pro1030);
 
     uint8_t get_dev_addr;//    get_zj_index, get_cs_index;
-    rxmidframe.canframeid = rxmeg.ExtId;
-    get_dev_addr          = rxmidframe.canframework.devaddr_8;
-    // get_zj_index          = rxmidframe.canframework.zjaddr_3;
-    // get_cs_index          = rxmidframe.canframework.csaddr_2;
+
     if (csrxcanp == NULL)
     {
         return -1;
     }
+
     rxmidframe.canframeid = rxmeg.ExtId;
+    get_dev_addr          = rxmidframe.canframework.devaddr_8;
+    // get_zj_index          = rxmidframe.canframework.zjaddr_3;
+    // get_cs_index          = rxmidframe.canframework.csaddr_2;
+
+    // rxmidframe.canframeid = rxmeg.ExtId;
     if (csrxcanp->csstate != CS_CAN_NORMAL)
     {
         return -1;
@@ -2107,8 +2112,9 @@ int max_heart_ackframe_proc(void *pro1030, CANDATAFORM rxmeg)
 int max_heartframe_overtimeproc(void *pro1030, CANDATAFORM overmeg)
 {
     uint8_t reset_reason[4] = { 0, 0, 0, 0 };
-    cs_can *csrxcanp        = (cs_can *)pro1030;
-    Q_UNUSED(overmeg);
+    cs_can *csrxcanp        = static_cast<cs_can *>(pro1030);
+    // Q_UNUSED(overmeg);
+    (void)overmeg;
     int soure_id = 0;
     int devtype  = 0;
     int bs_num = 0, io_num = 0;
@@ -2227,7 +2233,7 @@ int err_reportframe_proc(void *pro1030, CANDATAFORM rxmeg)
 {
     uint8_t    error_status[2];
     CANFRAMEID rxmidframe;
-    cs_can    *csrxcanp = (cs_can *)pro1030;
+    cs_can    *csrxcanp = static_cast<cs_can *>(pro1030);
     uint8_t    get_dev_addr;// get_zj_index, get_cs_index;
 
     rxmidframe.canframeid = rxmeg.ExtId;
@@ -2264,7 +2270,7 @@ int slavereset_frame_proc(void *pro1030, CANDATAFORM rxmeg)
     uint8_t        get_dev_addr; //get_zj_index, get_cs_index;
     CANFRAMEID     rxmidframe;
     static uint8_t report_addr = 0;
-    cs_can        *csrxcanp    = (cs_can *)pro1030;
+    cs_can        *csrxcanp    = static_cast<cs_can *>(pro1030);
     if (csrxcanp == NULL)
     {
         return 0;
@@ -2347,7 +2353,7 @@ int slavereset_frame_proc(void *pro1030, CANDATAFORM rxmeg)
  * 功能：cs初始化函数
  ***********************************************************************************/
 
-cs_can::cs_can(ncan_protocol *pro, QString key, int branch_num, int reset_enable)
+cs_can::cs_can(ncan_protocol *pro, const QString & key, int branch_num, int reset_enable)
 {
     // memset(this, 0x00, offsetof(cs_can, nconfig_map));
     //    memset(this, 0x00, offsetof(cs_can, mac_cszd_have));
@@ -2654,7 +2660,7 @@ void *heartManageThread(void *para)
                 if((logicState == 0) && (++heartErrCnt >= 14))
                 {
                     zprintf1("|||heartManageThread||| logic heart timeout, cs reset\n");
-                    ((cs_can *)para)->cs_can_reset_sem();
+                    (static_cast<cs_can *>(para))->cs_can_reset_sem();
                     heartErrCnt = 0;
                     logicState = 1; //logic状态异常
                 }
@@ -2684,16 +2690,16 @@ void *heartManageThread(void *para)
 void *cs_can::cs_protocol_init(void *para)
 {
     uint8_t reset_reason[4] = { 0, 0, 0, 0 };
-    if (((cs_can *)para)->cs_init( ) != 0)
+    if ((static_cast<cs_can *>(para))->cs_init( ) != 0)
     {
         zprintf1("init fail send sem!\n");
         reset_reason[0] = PTCAN_RESET_INIT;
-        reset_reason[1] = ((cs_can *)para)->auto_reset;
-        ((cs_can *)para)->nconfig_map.val(0).dev_send_meg(RESET_REASON, reset_reason, sizeof(reset_reason));
-        ((cs_can *)para)->cs_can_reset_sem( );
+        reset_reason[1] = (static_cast<cs_can *>(para))->auto_reset;
+        (static_cast<cs_can *>(para))->nconfig_map.val(0).dev_send_meg(RESET_REASON, reset_reason, sizeof(reset_reason));
+        (static_cast<cs_can *>(para))->cs_can_reset_sem( );
     }
     // printf("cs_protocol_init end\r\n");
-    ((cs_can *)para)->reset_state = DEV_RESET_OVER;
+    (static_cast<cs_can *>(para))->reset_state = DEV_RESET_OVER;
     return NULL;
 }
 
@@ -2703,11 +2709,11 @@ void *cs_can::cs_protocol_init(void *para)
  ***********************************************************************************/
 void *max_reset_process(void *para)
 {
-    int     reset_no_err = true;
-    cs_can *cs_pro_p     = ((cs_can *)para);
+    // int     reset_no_err;
+    cs_can *cs_pro_p     = static_cast<cs_can *>(para);
     while (1)
     {
-        reset_no_err = true;
+        int reset_no_err = true;
         zprintf1("||||||||||||||||||||||||||||||wait reset_Sem|||||||||||||||||||||||||||\r\n");
         sem_wait(&cs_pro_p->reset_sem);
 
@@ -2743,7 +2749,7 @@ void *max_reset_process(void *para)
 
 int mac_send_entry(void *para)
 {
-    cs_can *cs_pro_p                           = ((cs_can *)para);
+    cs_can *cs_pro_p                           = (static_cast<cs_can *>(para));
     cs_pro_p->mac_cszd_have.val(0).mac_cs_have = 0;
     cs_pro_p->mac_cszd_have.val(6).mac_cs_have = 0;
     cs_pro_p->mac_cszd_have.val(7).mac_cs_have = 0;
@@ -2752,7 +2758,7 @@ int mac_send_entry(void *para)
 
 int dev_break_send_entry(void *para)
 {
-    cs_can *cs_pro_p = ((cs_can *)para);
+    cs_can *cs_pro_p = (static_cast<cs_can *>(para));
 
     memset(cs_pro_p->cszjorder_temp, 0, sizeof(cs_pro_p->cszjorder_temp));
     memset(cs_pro_p->slave_io_num_temp, 0, sizeof(cs_pro_p->slave_io_num_temp));
@@ -2777,7 +2783,7 @@ int dev_break_send_entry(void *para)
  ***********************************************************************************/
 int max_poll_send_condition(void *para)
 {
-    cs_can *cs_pro_p = ((cs_can *)para);
+    cs_can *cs_pro_p = (static_cast<cs_can *>(para));
     if (cs_pro_p->csstate == CS_CAN_NORMAL)
     {
         return 1;
@@ -2844,7 +2850,7 @@ void cs_can::set_dev_state(uint8_t devid, uint8_t state)    // Start from 1
 void *func(void *arg)
 {
     Q_UNUSED(arg);
-    cs_can *cs_param           = ((cs_can *)arg);
+    cs_can *cs_param           = static_cast<cs_can *>(arg);
     uint8_t time_delay         = 0;
     uint8_t button_press_shake = 0;
     while (1)
@@ -3141,7 +3147,7 @@ int cs_can::cs_config_init(void)
  ***********************************************************************************/
 int poll1030_callback(CANp_TIME_ET *poll)
 {
-    poll->father->can_protocol_send(((cs_can *)poll->para)->pollFrame);
+    poll->father->can_protocol_send(static_cast<cs_can *>(poll->para)->pollFrame);
     return 0;
 }
 void cs_can::reset_all_dev(void)
@@ -3381,8 +3387,8 @@ cs_can::~cs_can( )
  ***********************************************************************************/
 int dev1030_output(void *midp, soutDataUnit val)
 {
-    cs_can *pro = (cs_can *)midp;
-    int     order;
+    cs_can * pro = static_cast<cs_can *>(midp);
+
     int     devoff;
 
     uint8_t  outvalue[3];
@@ -3403,6 +3409,7 @@ int dev1030_output(void *midp, soutDataUnit val)
     else
     {
         struct timeval tv;
+        int     order;
         gettimeofday(&tv, NULL);
         // printf("millisecond:%ld\n",tv.tv_sec*1000 + tv.tv_usec/1000);
         if (pro->is_have_config_slaveio(0, 0, devoff, order) == FALSE)

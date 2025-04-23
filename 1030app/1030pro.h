@@ -371,7 +371,7 @@ class cs_can:public cs_can_info
     CANDATAFORM   pollFrame; // 1030 poll frame;
 
   public:
-    cs_can(ncan_protocol* pro, QString key, int branch_num, int reset_enable);
+    cs_can(ncan_protocol* pro, const QString & key, int branch_num, int reset_enable);
 
     int  add_default_dev(int zjnum, int csnum, int devid, int io_num, uint16_t type);
     int  get_dev_id(int order);

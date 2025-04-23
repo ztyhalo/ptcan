@@ -257,10 +257,11 @@ void CAN_DEV_APP::reset_dev_data(void)
 
 int CAN_DEV_APP::dev_normal_process(void)
 {
-    if(heart_ok != 0)
-    {
-        heart_ok = 0;
-    }
+    // if(heart_ok != 0)
+    // {
+    //     heart_ok = 0;
+    // }
+    heart_ok = 0;
     return 1;
 }
 

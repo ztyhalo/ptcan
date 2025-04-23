@@ -165,7 +165,7 @@ int pro_rxmsg_callback(CanDriver* pro, CanFrame data)
     CANPROHEAD   rxheadinfo;
 
     CANDATAFORM    rxmeg  = lawdata_to_prodata(data);
-    ncan_protocol* midpro = (ncan_protocol*) pro->father_p;
+    ncan_protocol* midpro = static_cast<ncan_protocol*>(pro->father_p);
 
     frameid = rxmeg.IDE ? rxmeg.ExtId : rxmeg.StdId;
 
@@ -173,7 +173,7 @@ int pro_rxmsg_callback(CanDriver* pro, CanFrame data)
     {
         if (midpro->get_protocol_frameinfo(frameid, rxmeg.IDE, rxheadinfo) == 0)
         {
-            QDateTime dateTime = QDateTime::currentDateTime();
+            // QDateTime dateTime = QDateTime::currentDateTime();
 
             //            printf("time = %d\n", dateTime.time().msec());
             if (rxheadinfo.cancallbacfun != NULL)

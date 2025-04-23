@@ -28,7 +28,7 @@ private:
     sMsgType msg_data;
 
 public:
-    MsgObject(int key);
+    explicit MsgObject(int key);
     ~MsgObject();
     bool create_object(void);
     bool delete_object(void);

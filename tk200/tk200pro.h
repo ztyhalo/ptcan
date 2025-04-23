@@ -82,9 +82,10 @@ public:
 
 
 public:
-    TK200_Pro(ncan_protocol * pro, Pt_Devs_ShareData *data, QString key){
-        pro_p = pro;
-        data_p = data;
+    TK200_Pro(ncan_protocol * pro, Pt_Devs_ShareData *data, const QString & key):pro_p(pro),data_p(data)
+    {
+        // pro_p = pro;
+        // data_p = data;
         int i;
         for(i = 0; i < 2; i++)
         {

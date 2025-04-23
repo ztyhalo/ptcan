@@ -93,7 +93,7 @@ CANDATAFORM lawdata_to_prodata(CanFrame * f)
 }
 
 
-int  call_write_back(CanDriver * pro, CANDATAFORM data)
+int  call_write_back(CanDriver * pro, const CANDATAFORM data)
 {
 
         pro->writeframe(data);
@@ -107,7 +107,7 @@ int  call_write_back(CanDriver * pro, CANDATAFORM data)
      struct sockaddr_can addr;
      struct ifreq ifr;
      char canname[6];
-     ostringstream canset;
+     // ostringstream canset;
 //     canset << "/opt/canbrateset.sh can" << registerdev << " " << brate<< endl;
 
 //     memset(canname, 0, sizeof(canname));
@@ -251,7 +251,7 @@ int CanDriver::writeframe(const CANDATAFORM& f)
     return writeframe(prodata_to_lawdata(f));
 }
 
-int CanDriver::write_send_data(CANDATAFORM  & Msg)
+int CanDriver::write_send_data(const CANDATAFORM  & Msg)
 {
     int ret = -1;
     ret = writeframe(Msg);
