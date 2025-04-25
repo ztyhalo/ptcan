@@ -86,8 +86,7 @@ int Can_Data::can_read_xml(const QString  name, const QString  name1, const QStr
         readxml.parentid++;
         readxml.driver_read_xml(name2);
     }
-    zprintf1("zty mshare crate data!\n");
-    m_share.creat_data(sizeof(can_inode_info)*5, 97654888);
+
     memset(&d_info, 0x00, sizeof(d_info));
     for(int i = 0; i < readxml.dev.size(); i++)
     {

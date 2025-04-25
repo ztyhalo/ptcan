@@ -9,7 +9,7 @@
 #include <signal.h>
 #include "zprint.h"
 #include <QCoreApplication>
-// #include "netprint.h"
+#include "netprint.h"
 
 #include <string>
 
@@ -26,7 +26,7 @@
 #include <dirent.h>
 
 Can_Data *gCanInfo = NULL;
-// Print_Server * netp = NULL;
+Print_Server * netp = NULL;
 
 void SignalFunc(int var)
 {
@@ -39,7 +39,7 @@ void SignalFunc(int var)
         qDebug( ) << "delete gCanInfo";
         delete debug_p;
         qDebug( ) << "delete gCanInfo";
-        // delete gNetP;
+        delete gNetP;
         gCanInfo = NULL;
     }
     exit(0);
@@ -49,7 +49,7 @@ O_Timer timr;
 int     printf_time_callback(TEvent *tmpara)
 {
     (void)tmpara;
-    // nprintf("info is!\n");
+    nprintf("info is!\n");
     return 0;
 }
 
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(codec);
     QCoreApplication a(argc, argv);
 
-#if 1
+#if 0
          argc = 9;
          argv[1] = "87654334";
          argv[2] = "87654335";

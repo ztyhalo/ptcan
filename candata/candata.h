@@ -22,7 +22,7 @@
 #include "1030pro.h"
 #include "tk200pro.h"
 #include "zprint.h"
-#include "sharemem.h"
+
 
 using namespace std;
 
@@ -46,7 +46,6 @@ public:
     //    Pro_XML_Process      conf_func;
     cs_can    *cs1030;
     TK200_Pro *tk200;
-    ShareDataT<can_inode_info> m_share;
 
 public:
     Can_Data( ):canid(0),canbus(NULL),canpro(NULL),cs1030(NULL),tk200(NULL)

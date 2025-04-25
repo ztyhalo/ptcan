@@ -29,8 +29,11 @@ if(contains(TEMPLATE,"lib")){
 MOC_DIR = $$OUT_PWD/moc_tmp
 OBJECTS_DIR = $$OUT_PWD/o_tmp
 
-# COMMLIB_PATH = /home/z/zty/a9/commlib/commonlib/
-COMMLIB_PATH = /home/z/zty/app/commonlib
+COMMLIB_PATH = /home/z/zty/a9/commlib/commonlib/
+LIBS += -L/home/z/zty/a9/commlib/build/arm_poky_qt4_8_6-Debug/ -lzcommonlib
+
+# COMMLIB_PATH = /home/z/zty/app/commonlib
+# LIBS += -L/home/z/zty/app/build/arm_poky_4_8-Debug -lzcommonlib
 
 DEFINES += ARM_PLATFORM
 
@@ -74,8 +77,7 @@ INCLUDEPATH += $${COMMLIB_PATH}/.\
             $${COMMLIB_PATH}/file\
             $${COMMLIB_PATH}/zprint
 
-# LIBS += -L/home/z/zty/a9/commlib/build/arm_poky_qt4_8_6-Debug/ -lzcommonlib
-LIBS += -L/home/z/zty/app/build/arm_poky_4_8-Debug -lzcommonlib
+
 
 INCLUDEPATH += .\
         canbus\
